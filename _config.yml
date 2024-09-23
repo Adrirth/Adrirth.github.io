@@ -76,6 +76,3 @@ callouts:
   warning:
     title: Aviso
     color: red
-  nota:
-    title: nota
-    color: cerulean
