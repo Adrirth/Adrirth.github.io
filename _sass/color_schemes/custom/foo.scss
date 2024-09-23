@@ -1,10 +1,9 @@
-@import "./custom/setup.scss";
-@import "./color_schemes/dark";
+@use 'sass:color';  // Importar el módulo de color
 
+@import "./custom/setup.scss";  // Asegúrate de revisar este archivo
 
 $sidebar-color: $gunmetal;  // Define el color base
 $feedback-color: color.scale($sidebar-color, $lightness: -3%);  // Ajusta el feedback-color
-
 $link-color-darken: color.scale($link-color, $lightness: -2%);  // Reemplaza darken()
 
 // Otros colores y configuraciones

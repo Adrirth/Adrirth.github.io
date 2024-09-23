@@ -1,3 +1,7 @@
----
----
-{% include css/just-the-docs.scss.liquid color_scheme="dark" %}
+@use 'sass:color';
+@import "./custom/setup.scss"; 
+
+$color: $burnt-sienna; // Usar la variable definida en setup.scss
+$feedback-color: color.adjust($color, $lightness: -3%); // Asegúrate de usar la variable $color
+
+// Otros estilos y variables

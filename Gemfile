@@ -5,3 +5,6 @@ gem "jekyll", "~> 4.3.3" # installed by `gem jekyll`
 
 gem "just-the-docs", "0.10.0"
 
+gem 'csv'
+gem 'base64'
+gem 'sassc'

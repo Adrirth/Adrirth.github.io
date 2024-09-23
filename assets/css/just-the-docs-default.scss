@@ -1,4 +1,7 @@
----
+@use 'sass:color';
+@import "./custom/setup.scss"; 
+$color: $burnt-sienna; // O cualquier otro color que desees usar
+/*---
 ---
 {% if site.color_scheme and site.color_scheme != "nil" %}
   {% assign color_scheme = site.color_scheme %}
