@@ -1,8 +1,14 @@
 @import "./color_schemes/dark";
 @import "./custom/setup.scss";
 
+// Definir las fuentes
+$body-font-family: "Cascadia Code", system-ui, -apple-system, blinkmacsystemfont, "Segoe UI",
+  roboto, "Helvetica Neue", arial, sans-serif, "Segoe UI Emoji" !default;
+
+$mono-font-family: "Cascadia Code", "SFMono-Regular", Menlo, Consolas, monospace !default;
+
+// Otras variables de color y configuración
 $sidebar-color: $gunmetal;  // Define el color base
-// Otros colores y configuraciones
 $body-background-color: $gunmetal;
 $body-heading-color: $grey-lt-000;
 $body-text-color: $grey-lt-300;
