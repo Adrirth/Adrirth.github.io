@@ -1,6 +1,4 @@
-@import "./color_schemes/dark";
 @import "./custom/setup.scss";
-@import "./vendor/OneDarkJekyll/syntax";
 
 $sidebar-color: $gunmetal;  // Define el color base
 $feedback-color: color.scale($sidebar-color, $lightness: -3%);  // Ajusta el feedback-color
