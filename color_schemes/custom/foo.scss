@@ -1,23 +1,21 @@
-@import "./color_schemes/dark";
-@import "./custom/setup.scss";
-@import "./vendor/OneDarkJekyll/syntax";
 
-$sidebar-color: $gunmetal;  // Define el color base
-$feedback-color: color.scale($sidebar-color, $lightness: -3%);  // Ajusta el feedback-color
-
-$link-color-darken: color.scale($link-color, $lightness: -2%);  // Reemplaza darken()
-
-// Otros colores y configuraciones
+$color-scheme: dark;
 $body-background-color: $gunmetal;
 $body-heading-color: $grey-lt-000;
 $body-text-color: $grey-lt-300;
-$link-color: $burnt-sienna;  // Definir el color de links base
+$link-color: $burnt-sienna ;
 $nav-child-link-color: $grey-dk-000;
+$sidebar-color: $gunmetal;
 $base-button-color: $grey-dk-250;
 $btn-primary-color: $blue-200;
-$code-background-color: #31343f; // OneDarkJekyll default
-$code-linenumber-color: #dee2f7; // OneDarkJekyll
+$code-background-color: #31343f; // OneDarkJekyll default for syntax-one-dark-vivid
+$code-linenumber-color: #dee2f7; // OneDarkJekyll .nf for syntax-one-dark-vivid
+$feedback-color: darken($sidebar-color, 3%);
 $table-background-color: $grey-dk-250;
 $search-background-color: $grey-dk-250;
 $search-result-preview-color: $grey-dk-000;
 $border-color: $cerulean;
+
+@import "./vendor/OneDarkJekyll/syntax"; // this is the one-dark-vivid atom syntax theme
+@import "./color_schemes/dark";
+@import "./custom/setup.scss";
