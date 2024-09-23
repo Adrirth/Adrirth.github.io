@@ -1,0 +1,18 @@
+@import "./color_schemes/dark";
+@import "./custom/setup.scss";
+
+$sidebar-color: $gunmetal;  // Define el color base
+// Otros colores y configuraciones
+$body-background-color: $gunmetal;
+$body-heading-color: $grey-lt-000;
+$body-text-color: $grey-lt-300;
+$link-color: $burnt-sienna;  // Definir el color de links base
+$nav-child-link-color: $grey-dk-000;
+$base-button-color: $grey-dk-250;
+$btn-primary-color: $blue-200;
+$code-background-color: #31343f; // OneDarkJekyll default
+$code-linenumber-color: #dee2f7; // OneDarkJekyll
+$table-background-color: $grey-dk-250;
+$search-background-color: $grey-dk-250;
+$search-result-preview-color: $grey-dk-000;
+$border-color: $cerulean;
