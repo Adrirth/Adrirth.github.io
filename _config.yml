@@ -76,3 +76,7 @@ callouts:
   warning:
     title: Aviso
     color: red
+
+
+font:
+  text: "Cascadia, sans-serif"
