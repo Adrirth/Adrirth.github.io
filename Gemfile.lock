@@ -288,8 +288,8 @@ PLATFORMS
 DEPENDENCIES
   base64
   csv
-  github-pages
-  just-the-docs (= 0.10.0)
+  github-pages (~> 232)
+  just-the-docs
   sassc
 
 BUNDLED WITH
