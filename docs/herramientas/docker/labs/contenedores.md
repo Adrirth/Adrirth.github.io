@@ -2,7 +2,7 @@
 title: Contenedores docker
 layout: default
 nav_order:
-parent: Laboratorios
+parent: Docker
 ---
 
 # Contenedores docker
