@@ -2,7 +2,7 @@
 title: Imágenes
 layout: default
 nav_order:
-parent: Herramientas
+parent: Docker
 ---
 
 # Imágenes

@@ -2,7 +2,7 @@
 title: Instalación
 layout: default
 nav_order:
-parent: Herramientas
+parent: Docker
 nav_order: 2
 ---
 
