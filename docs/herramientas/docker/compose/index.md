@@ -1,7 +1,8 @@
 ---
 title: Docker compose
 layout: default
-parent: Herramientas
+parent: Docker
+nav_order: 99
 ---
 
 # Docker compose

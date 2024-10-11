@@ -1,7 +1,6 @@
 ---
 title: Instalación
 layout: default
-nav_order:
 parent: Docker
 nav_order: 2
 ---
