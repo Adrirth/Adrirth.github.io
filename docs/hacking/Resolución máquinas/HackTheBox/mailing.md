@@ -223,7 +223,7 @@ Investigando sobre lo que es capaz de realizar maya con sus privilegios, vemos q
 
 ![](/assets/images/Imagenes/Pasted image 20240921012548.png)
 ```shell
-evil.winrm -i mailing.htb -u maya -p m4y4ngs4ri
+evil-winrm -i mailing.htb -u maya -p m4y4ngs4ri
 ```
 
 ![](/assets/images/Imagenes/Pasted image 20240921012644.png)
