@@ -94,7 +94,7 @@ nmap -sCV -p53,88,135,139,389,445,464,593,3268,3269,5985,62343 10.10.11.35  -oN 
 
 ```
 
-Lo más interesante es el puerto 135 (SMB). Podemos ver el contenido compartido del servicio:
+Lo más interesante es el puerto 139 (SMB). Podemos ver el contenido compartido del servicio:
 
 ![](/assets/images/Imagenes/Pasted image 20241010231059.png)
 
@@ -249,6 +249,6 @@ evil-winrm -i cicada.htb -u administrator -H '2b87e7c93a3e8a0ea4a581937016f341'
 
 ![](/assets/images/Imagenes/Pasted image 20241011210745.png)
 
-Con esto ya tendremos root a la máquina, estando la bandera de este en su desktop.
+Con esto ya tendremos acceso root a la máquina, estando la bandera de este en su desktop.
 
 ![](/assets/images/Imagenes/Pasted image 20241011210919.png)
