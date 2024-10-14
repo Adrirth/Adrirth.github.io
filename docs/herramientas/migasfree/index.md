@@ -204,9 +204,3 @@ host    all             all             ::1/128                 md5
 psql -U postgres -h localhost
 ```
 
-
-## Errores comunes
-
-### Archivo /etc/migasfree-server/.init-server bloqueado
-
-Es probable que este archivo se quede 
